@@ -51,6 +51,10 @@ class Period(object):
     >>> Week(20130301)
     Week: W9.2013
 
+    # You can get current period without passing any parameters
+    >>> Month()
+    Month: 05.2015
+
     # Shifting
     >>> day = Day('14.02.2014')
     >>> day
@@ -76,6 +80,11 @@ class Period(object):
     Month: 11.1985
     >>> month
     Month: 06.1985
+
+    # Formatting period representation
+    >>> month = Month('05.05.1985')
+    >>> month.format('%Y%m')
+    '198505'
 
     # Gettings start/end of period
     >>> quarter = Quarter(20150606)
@@ -106,7 +115,10 @@ class Period(object):
     def parse(cls, text, format):
         return cls(datetime.strptime(str(text), format))
 
-    def __init__(self, dt):
+    def __init__(self, dt=None):
+        if dt is None:
+            self.datetime = datetime.now()
+
         if isinstance(dt, datetime):
             self.datetime = dt
 
@@ -177,6 +189,9 @@ class Period(object):
 
     def clone(self):
         return self.__class__(self.datetime)
+
+    def format(self, format_string):
+        return self.datetime.strftime(format_string)
 
     def range(self, format=None):
         return [self.start(format), self.end(format)]

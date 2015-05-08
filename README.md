@@ -31,6 +31,13 @@ Month: 12.2014
 Year: 2015
 ```
 
+#### You can get current period without passing any parameters
+
+```python
+>>> Month()
+Month: 05.2015
+```
+
 #### Instantiate with string
 
 ```python
@@ -89,6 +96,14 @@ Month: 06.1985
 Month: 11.1985
 >>> month
 Month: 06.1985
+```
+
+#### Formatting period representation
+
+```python
+>>> month = Month('05.05.1985')
+>>> month.format('%Y%m')
+'198505'
 ```
 
 #### Gettings start/end of period
