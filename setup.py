@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name='yqmd',
     packages=['yqmd'],
-    version='0.1.1',
+    version='0.1.2',
     description='Utility lib for working with common period types',
     author='Viktor Ten',
     author_email='ten.viktor@gmail.com',
