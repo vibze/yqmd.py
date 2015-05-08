@@ -15,6 +15,8 @@ pip install yqmd
 [Quarter: Q1.2014, Quarter: Q2.2014, Quarter: Q2.2014, Quarter: Q3.2014, Quarter: Q1.2015]
 >>> Day.sequence(datetime(2015, 1, 29), datetime(2015, 2, 2))
 [Day: 29.01.2015, Day: 30.01.2015, Day: 31.01.2015, Day: 01.02.2015, Day: 02.02.2015]
+>>> Month.sequence(20150505, 20141201)
+[Month: 05.2015, Month: 04.2015, Month: 03.2015, Month: 02.2015, Month: 01.2015, Month: 12.2014]
 ```
 
 #### Parse string

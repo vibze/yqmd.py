@@ -17,6 +17,8 @@ class Period(object):
     [Quarter: Q1.2014, Quarter: Q2.2014, Quarter: Q2.2014, Quarter: Q3.2014, Quarter: Q1.2015]
     >>> Day.sequence(datetime(2015, 1, 29), datetime(2015, 2, 2))
     [Day: 29.01.2015, Day: 30.01.2015, Day: 31.01.2015, Day: 01.02.2015, Day: 02.02.2015]
+    >>> Month.sequence(20150505, 20141201)
+    [Month: 05.2015, Month: 04.2015, Month: 03.2015, Month: 02.2015, Month: 01.2015, Month: 12.2014]
 
     # Parse string
     >>> Month.parse('01 12 2014', '%d %m %Y')
@@ -105,10 +107,16 @@ class Period(object):
         start = cls(start)
         end = cls(end)
 
-        seq = [start]
-        while start != end:
-            start = start.clone().next()
-            seq.append(start)
+        if start < end:
+            seq = [start]
+            while start != end:
+                start = start.clone().next()
+                seq.append(start)
+        else:
+            seq = [start]
+            while start != end:
+                start = start.clone().prev()
+                seq.append(start)
         return seq
 
     @classmethod
@@ -181,6 +189,18 @@ class Period(object):
     def __ne__(self, other):
         return self.__str__() != other.__str__()
 
+    def __gt__(self, other):
+        return self.datetime > other.datetime
+
+    def __lt__(self, other):
+        return self.datetime < other.datetime
+
+    def __ge__(self, other):
+        return self.datetime >= other.datetime
+
+    def __le__(self, other):
+        return self.datetime <= other.datetime
+
     def next(self, n=1):
         return self.shift(n)
 
@@ -197,7 +217,7 @@ class Period(object):
         return [self.start(format), self.end(format)]
 
     def __str__(self):
-        return self.datetime.strftime('%d.%m.%Y')
+        return self.format('%d.%m.%Y')
 
     def __repr__(self):
         return "%s: %s" % (self.__class__.__name__, self.__str__())
@@ -264,7 +284,7 @@ class Month(Quarter):
         return self
 
     def __str__(self):
-        return self.datetime.strftime('%m.%Y')
+        return self.format('%m.%Y')
 
 
 class Week(Month):
@@ -289,7 +309,7 @@ class Week(Month):
         return self
 
     def __str__(self):
-        return self.datetime.strftime('W%s.%%Y' % self.week)
+        return self.format('W%s.%%Y' % self.week)
 
 
 class Day(Week):
@@ -314,7 +334,7 @@ class Day(Week):
         return self
 
     def __str__(self):
-        return self.datetime.strftime('%d.%m.%Y')
+        return self.format('%d.%m.%Y')
 
 
 if __name__ == "__main__":
