@@ -55,7 +55,7 @@ class Period(object):
 
     # You can get current period without passing any parameters
     >>> Month()
-    Month: 05.2015
+    Month: 11.2015
 
     # Shifting
     >>> day = Day('14.02.2014')
@@ -88,7 +88,7 @@ class Period(object):
     >>> month.format('%Y%m')
     '198505'
 
-    # Gettings start/end of period
+    # Getting start/end of period
     >>> quarter = Quarter(20150606)
     >>> quarter
     Quarter: Q2.2015
@@ -101,6 +101,16 @@ class Period(object):
 
     # Periods also have numeric attributes representing year/quarter/month/week/day if it's possible.
     # For example year only has `year` attribute and month has `year`, `quarter` and `month` attributes.
+
+    # Various database shortcuts
+    Oracle date
+    >>> Month('05.05.1985').as_oracle_date
+    "TO_DATE('19850505', 'yyyymmdd')"
+
+    MySQL date
+    >>> Month('05.05.1985').as_mysql_date
+    '1985-05-05'
+
     """
     @classmethod
     def sequence(cls, start, end):
@@ -215,6 +225,14 @@ class Period(object):
 
     def range(self, format=None):
         return [self.start(format), self.end(format)]
+
+    @property
+    def as_oracle_date(self):
+        return "TO_DATE('%s', 'yyyymmdd')" % self.format('%Y%m%d')
+
+    @property
+    def as_mysql_date(self):
+        return '%s' % self.format('%Y-%m-%d')
 
     def __str__(self):
         return self.format('%d.%m.%Y')

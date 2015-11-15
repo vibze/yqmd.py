@@ -123,3 +123,12 @@ datetime.datetime(2015, 6, 30, 23, 59, 59, 999999)
 
 Periods also have numeric attributes representing year/quarter/month/week/day if it's possible.
 For example year only has `year` attribute and month has `year`, `quarter` and `month` attributes.
+
+#### Various database shortcuts
+```python
+>>> Month('05.05.1985').as_oracle_date
+"TO_DATE('19850505', 'yyyymmdd')"
+
+>>> Month('05.05.1985').as_mysql_date
+'1985-05-05'
+```
