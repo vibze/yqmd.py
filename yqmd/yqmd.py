@@ -57,6 +57,12 @@ class Period(object):
     >>> Month()
     Month: 11.2015
 
+    # Instantiate from other period type. Call it conversion.
+    >>> christmas = Day('20151225')
+    >>> Month(christmas)
+    Month: 12.2015
+
+
     # Shifting
     >>> day = Day('14.02.2014')
     >>> day
@@ -136,6 +142,9 @@ class Period(object):
     def __init__(self, dt=None):
         if dt is None:
             self.datetime = datetime.now()
+
+        if isinstance(dt, Period):
+            self.datetime = dt.datetime
 
         if isinstance(dt, datetime):
             self.datetime = dt
