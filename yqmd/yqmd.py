@@ -33,6 +33,11 @@ class Period(object):
     >>> Quarter('2013-05-06')
     Quarter: Q2.2013
 
+    # Instantiate using another Period instance
+    >>> m = Month('01-01-2016')
+    >>> Month(m)
+    Month: 01.2016
+
     # DD-MM-YYYY. Separator can be hyphen dot or slash
     >>> Day('05-05-1985')
     Day: 05.05.1985
@@ -54,8 +59,9 @@ class Period(object):
     Week: W9.2013
 
     # You can get current period without passing any parameters
-    >>> Month()
-    Month: 11.2015
+    >>> import datetime
+    >>> Month().format('%Y%m') == datetime.datetime.now().strftime('%Y%m')
+    True
 
     # Shifting
     >>> day = Day('14.02.2014')
@@ -142,6 +148,9 @@ class Period(object):
 
         if isinstance(dt, int):
             dt = str(dt)
+
+        if issubclass(dt.__class__, Period):
+            self.datetime = dt.datetime
 
         if isinstance(dt, str):
             datere = re.compile(r"""
