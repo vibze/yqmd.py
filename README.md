@@ -7,7 +7,7 @@ pip install yqmd
 ```
 
 ### Usage examples
- 
+
 #### Create a sequence
 
 ```python
@@ -38,6 +38,14 @@ Year: 2015
 ```python
 >>> Month()
 Month: 05.2015
+```
+
+#### Instantiate using another Period instance
+
+```python
+>>> m = Month('01-01-2016')
+>>> Month(m)
+Month: 01.2016
 ```
 
 #### Instantiate with string
