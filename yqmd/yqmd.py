@@ -152,7 +152,7 @@ class Period(object):
         if issubclass(dt.__class__, Period):
             self.datetime = dt.datetime
 
-        if isinstance(dt, str):
+        if isinstance(dt, str) or isinstance(dt, unicode):
             datere = re.compile(r"""
                 (?:\s*)
                 (?P<iso>
